@@ -89,7 +89,7 @@ void command_prompt(void *pvParameters)
 {
 	char buf[128];
 	char *argv[20];
-    char hint[] = USER_NAME "@" USER_NAME "-STM32:~$ ";
+	char hint[] = USER_NAME "@" USER_NAME "-STM32:~$ ";
 
 	fio_printf(1, "\rWelcome to FreeRTOS Shell\r\n");
 	while(1){
