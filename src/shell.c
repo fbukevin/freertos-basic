@@ -16,6 +16,8 @@ typedef struct {
 	const char *desc;
 } cmdlist;
 
+extern int fibonacci(int);
+
 void ls_command(int, char **);
 void man_command(int, char **);
 void cat_command(int, char **);
@@ -164,11 +166,19 @@ void help_command(int n,char *argv[]){
 }
 
 void test_command(int n, char *argv[]) {
-    int handle;
-    int error;
+    //int handle;
+    //int error;
+	int number = 6;
+	int previous = -1, result = 1, i = 0, sum = 0;
+	for (i = 0; i <= number; i++){
+		sum = result + previous;
+		previous = result;
+		result = sum;
+	}	
 
-    fio_printf(1, "\r\n");
+    	fio_printf(1, "i\r\nfibonacci of 6 is %d\r\n", result);
     
+/*
     handle = host_action(SYS_SYSTEM, "mkdir -p output");
     handle = host_action(SYS_SYSTEM, "touch output/syslog");
 
@@ -187,9 +197,11 @@ void test_command(int n, char *argv[]) {
     }
 
     host_action(SYS_CLOSE, handle);
+*/
 }
 
 void exit_command(int n, char *argv[]){
+	/*
 	int pid; 	
 	char *buffer = "";
 	
@@ -197,6 +209,7 @@ void exit_command(int n, char *argv[]){
 	fio_printf(1, "%d\n", pid);
 	sprintf(buffer ,"kill -9 %d", pid);	
 	host_action(SYS_SYSTEM, buffer);
+	*/
 }
 
 void _command(int n, char *argv[]){
