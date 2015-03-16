@@ -8,6 +8,7 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "host.h"
+#include <unistd.h>
 
 typedef struct {
 	const char *name;
@@ -189,8 +190,13 @@ void test_command(int n, char *argv[]) {
 }
 
 void exit_command(int n, char *argv[]){
-
-
+	int pid; 	
+	char *buffer = "";
+	
+	pid = getpid();	// get PID of FreeRTOS emulator
+	fio_printf(1, "%d\n", pid);
+	sprintf(buffer ,"kill -9 %d", pid);	
+	host_action(SYS_SYSTEM, buffer);
 }
 
 void _command(int n, char *argv[]){
