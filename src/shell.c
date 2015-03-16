@@ -16,8 +16,6 @@ typedef struct {
 	const char *desc;
 } cmdlist;
 
-extern int fibonacci(int);
-
 void ls_command(int, char **);
 void man_command(int, char **);
 void cat_command(int, char **);
@@ -28,6 +26,7 @@ void host_command(int, char **);
 void mmtest_command(int, char **);
 void test_command(int, char **);
 void exit_command(int, char **);
+void new_comman(int, char **);
 void _command(int, char **);
 
 #define MKCL(n, d) {.name=#n, .fptr=n ## _command, .desc=d}
@@ -168,7 +167,9 @@ void help_command(int n,char *argv[]){
 void test_command(int n, char *argv[]) {
     //int handle;
     //int error;
-	int number = 6;
+	int number;
+	fio_printf(1, "Please insert a number for fibonacci:");
+	scanf("%d", &number);
 	int previous = -1, result = 1, i = 0, sum = 0;
 	for (i = 0; i <= number; i++){
 		sum = result + previous;
@@ -176,7 +177,7 @@ void test_command(int n, char *argv[]) {
 		result = sum;
 	}	
 
-    	fio_printf(1, "i\r\nfibonacci of 6 is %d\r\n", result);
+    	fio_printf(1, "i\r\nfibonacci of %d is %d\r\n", number, result);
     
 /*
     handle = host_action(SYS_SYSTEM, "mkdir -p output");
@@ -210,6 +211,10 @@ void exit_command(int n, char *argv[]){
 	sprintf(buffer ,"kill -9 %d", pid);	
 	host_action(SYS_SYSTEM, buffer);
 	*/
+}
+
+void new_command(int n, char *argv[]){
+
 }
 
 void _command(int n, char *argv[]){
