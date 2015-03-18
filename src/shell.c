@@ -25,8 +25,8 @@ void help_command(int, char **);
 void host_command(int, char **);
 void mmtest_command(int, char **);
 void test_command(int, char **);
+void new_command(int, char **);
 void exit_command(int, char **);
-void new_comman(int, char **);
 void _command(int, char **);
 
 #define MKCL(n, d) {.name=#n, .fptr=n ## _command, .desc=d}
@@ -40,6 +40,7 @@ cmdlist cl[]={
 	MKCL(mmtest, "heap memory allocation test"),
 	MKCL(help, "help"),
 	MKCL(test, "test new function"),
+	MKCL(new, "create a new task"),
 	MKCL(exit, "exit"),
 	MKCL(, ""),
 };
@@ -167,9 +168,9 @@ void help_command(int n,char *argv[]){
 void test_command(int n, char *argv[]) {
     //int handle;
     //int error;
-	int number;
-	fio_printf(1, "Please insert a number for fibonacci:");
-	scanf("%d", &number);
+	int number=6;
+	//fio_printf(1, "Please insert a number for fibonacci:");
+	//scanf("%d", &number);
 	int previous = -1, result = 1, i = 0, sum = 0;
 	for (i = 0; i <= number; i++){
 		sum = result + previous;
@@ -213,8 +214,31 @@ void exit_command(int n, char *argv[]){
 	*/
 }
 
+void blank_task(void *pvParameters){
+	/* task body */
+	fio_printf(1, "Task is running...\r\n");
+	while(1){}
+
+}
+
 void new_command(int n, char *argv[]){
 
+	fio_printf(1, "\r\n");
+	
+	portBASE_TYPE status = xTaskCreate(blank_task,			// task function pointer "pvTaskcode"
+				 	   (signed portCHAR *) "New Task", // task name "pcName"
+				 	   configMINIMAL_STACK_SIZE, 	// allocated stack size "usStackDepth"
+				 	   NULL, 			// parameters passed to task "*pvParameters"
+				 	   1, 				// (tmp) priority "uxPriority"
+				 	   NULL); 			// handle
+					  
+	if(status == pdTRUE){
+		fio_printf(1, "New task created.\r\n");
+	} else if( status == errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY){
+		fio_printf(1,  "Failed to create new task: not enough memory to allocate.");
+	}
+
+	fio_printf(1, "\r\n");
 }
 
 void _command(int n, char *argv[]){
