@@ -39,7 +39,8 @@ int _write(int file, char *ptr, int len);
 
 void _exit(int status) {
     _write(1, "exit", 4);
-    while (1) {
+    
+	while (1) {
         ;
     }
 }

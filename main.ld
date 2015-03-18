@@ -2,7 +2,7 @@ ENTRY(main)
 MEMORY
 {
   FLASH (rx) : ORIGIN = 0x00000000, LENGTH = 128K
-  RAM (rwx) : ORIGIN = 0x20000000, LENGTH = 128K
+  RAM (rwx) : ORIGIN = 0x20000000, LENGTH = 1024K
 
 }
 
@@ -19,6 +19,14 @@ SECTIONS
 		_eromfs = .;
 		_sidata = .;
 	} >FLASH
+
+
+	.ARM.exidx : 
+	{	
+		__exidx_start = .;
+		*(.ARM.exidx*)
+		__exidx_end = .;
+	} >RAM
 
 	/* Initialized data will initially be loaded in FLASH at the end of the .text section. */
     .data : AT (_sidata) 
