@@ -85,6 +85,7 @@ char recv_byte()
 	while(!xQueueReceive(serial_rx_queue, &msg, portMAX_DELAY));
 	return msg;
 }
+
 void command_prompt(void *pvParameters)
 {
 	char buf[128];
@@ -104,8 +105,8 @@ void command_prompt(void *pvParameters)
 			fptr(n, argv);
 		else
 			fio_printf(2, "\r\n\"%s\" command not found.\r\n", argv[0]);
-	}
 
+	}
 }
 
 void system_logger(void *pvParameters)
@@ -115,6 +116,9 @@ void system_logger(void *pvParameters)
     char *tag = "\nName          State   Priority  Stack  Num\n*******************************************\n";
     int handle, error;
     const portTickType xDelay = 100000 / 100;
+
+    handle = host_action(SYS_SYSTEM, "mkdir -p output");
+    handle = host_action(SYS_SYSTEM, "touch output/syslog"); 
 
     handle = host_action(SYS_OPEN, "output/syslog", 4);
     if(handle == -1) {
@@ -165,18 +169,16 @@ int main()
 	 * Reference: www.freertos.org/a00116.html */
 	serial_rx_queue = xQueueCreate(1, sizeof(char));
 
-    register_devfs();
+	register_devfs();
 	/* Create a task to output text read from romfs. */
 	xTaskCreate(command_prompt,
 	            (signed portCHAR *) "CLI",
 	            512 /* stack size */, NULL, tskIDLE_PRIORITY + 2, NULL);
 
-#if 0
 	/* Create a task to record system log. */
 	xTaskCreate(system_logger,
 	            (signed portCHAR *) "Logger",
 	            1024 /* stack size */, NULL, tskIDLE_PRIORITY + 1, NULL);
-#endif
 
 	/* Start running the tasks. */
 	vTaskStartScheduler();
