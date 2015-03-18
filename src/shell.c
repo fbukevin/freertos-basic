@@ -26,7 +26,6 @@ void host_command(int, char **);
 void mmtest_command(int, char **);
 void test_command(int, char **);
 void new_command(int, char **);
-void exit_command(int, char **);
 void _command(int, char **);
 
 #define MKCL(n, d) {.name=#n, .fptr=n ## _command, .desc=d}
@@ -41,8 +40,7 @@ cmdlist cl[]={
 	MKCL(help, "help"),
 	MKCL(test, "test new function"),
 	MKCL(new, "create a new task"),
-	MKCL(exit, "exit"),
-	MKCL(, ""),
+	MKCL(, "")
 };
 
 int parse_command(char *str, char *argv[]){
@@ -177,19 +175,7 @@ void test_command(int n, char *argv[]) {
 		result = sum;
 	}	
 
-    	fio_printf(1, "i\r\nfibonacci of %d is %d\r\n", number, result);
-}
-
-void exit_command(int n, char *argv[]){
-	/*
-	int pid; 	
-	char *buffer = "";
-	
-	pid = getpid();	// get PID of FreeRTOS emulator
-	fio_printf(1, "%d\n", pid);
-	sprintf(buffer ,"kill -9 %d", pid);	
-	host_action(SYS_SYSTEM, buffer);
-	*/
+    	fio_printf(1, "\r\nfibonacci of %d is %d\r\n", number, result);
 }
 
 void blank_task(void *pvParameters){
