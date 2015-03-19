@@ -166,19 +166,34 @@ void help_command(int n,char *argv[]){
 void test_command(int n, char *argv[]) {
 	fio_printf(1, "\r\n");
 	
-	char tmpnum[128];
-	int number = 0;
-	fio_printf(1, "Please insert a number for fibonacci:");
-	fio_read(0, tmpnum, 128);
-	atoi(tmpnum, &number);
-	int previous = -1, result = 1, i = 0, sum = 0;
-	for (i = 0; i <= number; i++){
-		sum = result + previous;
-		previous = result;
-		result = sum;
-	}	
+	if(n != 2){
+		fio_printf(1, "Usage: test [fib|prime]\r\n");
+		return;
+	}else{
+		if(strcmp(argv[1], "fib") == 0){
+			char tmpnum[128];
+			int number = 0;
+			int previous = -1, result = 1, i = 0, sum = 0;
+			
+			fio_printf(1, "Please insert a number for fibonacci: ");
+			fio_read(0, tmpnum, 128);
+			atoi(tmpnum, &number);
+			
+			for (i = 0; i <= number; i++){
+				sum = result + previous;
+				previous = result;
+				result = sum;
+			}	
 
-    	fio_printf(1, "\r\nfibonacci of %d is %d\r\n", number, result);
+    			fio_printf(1, "\r\nfibonacci of %d is %d\r\n", number, result);	
+		}else if(strcmp(argv[1], "prime") == 0){
+			
+		}else{
+			fio_printf(1, "Usage: test [fib|prime]\r\n");
+			return;
+		}
+	}
+	
 }
 
 void blank_task(void *pvParameters){
