@@ -164,10 +164,13 @@ void help_command(int n,char *argv[]){
 }
 
 void test_command(int n, char *argv[]) {
+	fio_printf(1, "\r\n");
 	
-	int number;
+	char tmpnum[128];
+	int number = 0;
 	fio_printf(1, "Please insert a number for fibonacci:");
-	fio_scanf(0, "%d", &number);
+	fio_read(0, tmpnum, 128);
+	atoi(tmpnum, &number);
 	int previous = -1, result = 1, i = 0, sum = 0;
 	for (i = 0; i <= number; i++){
 		sum = result + previous;

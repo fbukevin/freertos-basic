@@ -40,8 +40,13 @@ size_t fio_printf(int fd, const char *format, ...){
 	return count;
 }
 
-size_t fio_scanf(int fd, const char *format, ...){
-	
+void atoi(char *str, int *result){
+
+	while(*str != 0){
+		int c = *str - '0';
+		*result = *result * 10 + c;
+		str++;
+	}
 }
 
 int sprintf(char *dest, const char *format, ...){

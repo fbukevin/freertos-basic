@@ -16,6 +16,7 @@ int sprnitf(char *, const char *, ...);
  * however c doesn't allow function overloading */
 char *itoa(const char *numbox, int i, unsigned int base);
 char *utoa(const char *numbox, unsigned int i, unsigned int base);
+void atoi(char *str, int *result);
 
 char *strcat(char * restrict dest, const char * restrict source);
 size_t strlen(const char *str);
