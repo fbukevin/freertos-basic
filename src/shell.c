@@ -165,9 +165,9 @@ void help_command(int n,char *argv[]){
 
 void test_command(int n, char *argv[]) {
 	
-	int number=6;
-	//fio_printf(1, "Please insert a number for fibonacci:");
-	//scanf("%d", &number);
+	int number;
+	fio_printf(1, "Please insert a number for fibonacci:");
+	fio_scanf(0, "%d", &number);
 	int previous = -1, result = 1, i = 0, sum = 0;
 	for (i = 0; i <= number; i++){
 		sum = result + previous;

@@ -10,8 +10,8 @@ size_t fio_printf(int fd, const char *format, ...){
 	va_list(v1);
 	va_start(v1, format);
 
-	int tmpint;
-	char *tmpcharp;
+	int tmpint;		// store argument in integer type
+	char *tmpcharp;		// store argument in char type
 	
 	for(i=0; format[i]; ++i){
 		if(format[i]=='%'){
@@ -21,12 +21,12 @@ size_t fio_printf(int fd, const char *format, ...){
 				case 'd':
 				case 'x':
 				case 'X':
-					tmpint = va_arg(v1, int);
+					tmpint = va_arg(v1, int);	// get argumet in va_list
 					tmpcharp = itoa(format[i+1]=='x'?"0123456789abcdef":"0123456789ABCDEF", tmpint, format[i+1]=='d'?10: 16);
-					fio_write(fd, tmpcharp, strlen(tmpcharp));
+					fio_write(fd, tmpcharp, strlen(tmpcharp));	// write to argument content to stdout
 					break;
 				case 's':
-					tmpcharp = va_arg(v1, char *);
+					tmpcharp = va_arg(v1, char *);	
 					fio_write(fd, tmpcharp, strlen(tmpcharp));
 					break;
 			}
@@ -38,6 +38,10 @@ size_t fio_printf(int fd, const char *format, ...){
 
 	va_end(v1);
 	return count;
+}
+
+size_t fio_scanf(int fd, const char *format, ...){
+	
 }
 
 int sprintf(char *dest, const char *format, ...){
