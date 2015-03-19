@@ -170,9 +170,10 @@ void test_command(int n, char *argv[]) {
 		fio_printf(1, "Usage: test [fib|prime]\r\n");
 		return;
 	}else{
+		char tmpnum[128];
+		int number = 0;
 		if(strcmp(argv[1], "fib") == 0){
-			char tmpnum[128];
-			int number = 0;
+
 			int previous = -1, result = 1, i = 0, sum = 0;
 			
 			fio_printf(1, "Please insert a number for fibonacci: ");
@@ -188,6 +189,27 @@ void test_command(int n, char *argv[]) {
     			fio_printf(1, "\r\nfibonacci of %d is %d\r\n", number, result);	
 		}else if(strcmp(argv[1], "prime") == 0){
 			
+			fio_printf(1, "Please insert a number for prime number test: ");
+			fio_read(0, tmpnum, 128);
+			atoi(tmpnum, &number);	
+			
+			if(number <= 3)
+				if(number > 1)
+					fio_printf(1, "\r\n%d is prime\r\n", number);
+				else	
+					fio_printf(1, "\r\n%d is not prime\r\n", number);
+			else if( number % 2 == 0 || number % 3 == 0)
+				fio_printf(1, "\r\n%d is not prime\r\n", number);
+			else{
+				unsigned short i = 5;
+				for(; i * i <= number; i += 6){
+					if(number % i == 0 || number % (i+2) == 0){
+						fio_printf(1, "\r\n%d is not prime\r\n", number); 
+						return;
+					}
+				}
+				fio_printf(1, "\r\n%d is prime\r\n", number); 
+			}
 		}else{
 			fio_printf(1, "Usage: test [fib|prime]\r\n");
 			return;
