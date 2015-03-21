@@ -144,3 +144,14 @@ char *utoa(const char *numbox, unsigned int num, unsigned int base){
 		buf[i] = numbox [num % base];
 	return buf+i+1;
 }
+
+int is_int(char *s){
+	
+	while(*s != '\0'){
+		if(*s < 48 || *s > 57)
+			return 0; 
+		s++;
+	}
+	
+	return 1;	
+}

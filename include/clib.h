@@ -21,5 +21,6 @@ void atoi(char *str, int *result);
 char *strcat(char * restrict dest, const char * restrict source);
 size_t strlen(const char *str);
 
+int is_int(char *s);
 
 #endif

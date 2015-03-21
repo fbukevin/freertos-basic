@@ -220,7 +220,7 @@ void test_command(int n, char *argv[]) {
 
 void blank_task(void *pvParameters){
 	/* task body */
-	fio_printf(1, "Task is running...\r\n");
+	/* DEBUG:	fio_printf(1, "Task is running...\r\n"); */
 	while(1){}
 
 }
@@ -228,20 +228,33 @@ void blank_task(void *pvParameters){
 void new_command(int n, char *argv[]){
 
 	fio_printf(1, "\r\n");
-	
-	portBASE_TYPE status = xTaskCreate(blank_task,			// task function pointer "pvTaskcode"
-				 	   (signed portCHAR *) "New Task", // task name "pcName"
-				 	   configMINIMAL_STACK_SIZE, 	// allocated stack size "usStackDepth"
-				 	   NULL, 			// parameters passed to task "*pvParameters"
-				 	   1, 				// (tmp) priority "uxPriority"
-				 	   NULL); 			// handle
-					  
-	if(status == pdTRUE){
-		fio_printf(1, "New task created.\r\n");
-	} else if( status == errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY){
-		fio_printf(1,  "Failed to create new task: not enough memory to allocate.");
+
+	if(n != 2 || !is_int(argv[1]))
+	{
+		fio_printf(1, "usage: new [count]\r\n  - count: number of task to create\r\n");
+		return;
 	}
 
+	int count = 0; 
+	atoi(argv[1], &count);
+
+	fio_printf(1, "%d\r\n", count);
+
+	int i;
+	for(i=0; i < count; i++){	
+		portBASE_TYPE status = xTaskCreate(blank_task,			// task function pointer "pvTaskcode"
+			 	   (signed portCHAR *) "New Task", // task name "pcName"
+			 	   configMINIMAL_STACK_SIZE, 	// allocated stack size "usStackDepth"
+			 	   NULL, 			// parameters passed to task "*pvParameters"
+			 	   1, 				// (tmp) priority "uxPriority"
+			 	   NULL); 			// handle
+					  
+		if(status == pdTRUE){
+			fio_printf(1, "New task created.\r\n");
+		} else if( status == errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY){
+			fio_printf(1,  "Failed to create new task: not enough memory to allocate.");
+		}
+}	
 	fio_printf(1, "\r\n");
 }
 

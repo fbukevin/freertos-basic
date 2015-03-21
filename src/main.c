@@ -113,7 +113,7 @@ void system_logger(void *pvParameters)
 {
     signed char buf[128];
     char output[512] = {0};
-    char *tag = "\nName          State   Priority  Stack  Num\n*******************************************\n";
+    char *tag = "\nName\tState\tPriority\tStack\tNum\n*******************************************\n";
     int handle, error;
     const portTickType xDelay = 100000 / 100;
 
