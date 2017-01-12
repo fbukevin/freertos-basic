@@ -17,12 +17,12 @@ PLAT = STM32F10x
 
 LIBDIR = .
 CODEBASE = freertos
-CMSIS_LIB = $(CODEBASE)/libraries/CMSIS/$(ARCH)
-STM32_LIB = $(CODEBASE)/libraries/STM32F10x_StdPeriph_Driver
+CMSIS_LIB = $(CODEBASE)/CMSIS/$(ARCH)
+STM32_LIB = $(CODEBASE)/STM32F10x_StdPeriph_Driver
 
 CMSIS_PLAT_SRC = $(CMSIS_LIB)/DeviceSupport/$(VENDOR)/$(PLAT)
 
-FREERTOS_SRC = $(CODEBASE)/libraries/FreeRTOS
+FREERTOS_SRC = $(CODEBASE)/FreeRTOS
 FREERTOS_INC = $(FREERTOS_SRC)/include/                                       
 FREERTOS_PORT_INC = $(FREERTOS_SRC)/portable/GCC/ARM_$(ARCH)/
 

@@ -9,3 +9,5 @@ test-romfs.bin
 build
 output
 tags
+.DS_Store
+DAC_OUT_PUT*
